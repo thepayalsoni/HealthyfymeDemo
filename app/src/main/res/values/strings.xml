@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">HealthyfymeDemo</string>
+
+    <string name="header_text">Choose A Date &amp; Time</string>
+</resources>
