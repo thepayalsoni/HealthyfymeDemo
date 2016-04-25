@@ -1,38 +1,29 @@
 package com.payal.healthyfymedemo;
 
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.PagerTabStrip;
+import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.payal.healthyfymedemo.adapter.DateAdapter;
 import com.payal.healthyfymedemo.interfaces.SlotsApi;
-import com.payal.healthyfymedemo.pojo.Sessions;
 import com.payal.healthyfymedemo.pojo.Slots;
-import com.payal.healthyfymedemo.utility.Utils;
-
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 import retrofit.Call;
 import retrofit.Callback;
+import retrofit.GsonConverterFactory;
 import retrofit.Response;
 import retrofit.Retrofit;
-import retrofit.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity implements Callback<Slots> {
     ViewPager vp_dates;
-    TextView  tv_month;
+    TextView tv_month;
+    private static final String FRAGMENT_TAG_DATA_PROVIDER = "data provider";
+    TabLayout tabs;
 
-    PagerTabStrip pager_tab_strip;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,26 +40,23 @@ public class MainActivity extends AppCompatActivity implements Callback<Slots> {
         Call<Slots> call = stackOverflowAPI.loadSlots();
         call.enqueue(this);
 
-        vp_dates =(ViewPager) findViewById(R.id.vp_dates);
+        vp_dates = (ViewPager) findViewById(R.id.vp_dates);
         tv_month = (TextView) findViewById(R.id.tv_month);
 
-
-        pager_tab_strip = (PagerTabStrip) vp_dates.findViewById(R.id.pager_tab_strip);
-
-        pager_tab_strip.setTabIndicatorColor(getResources().getColor(R.color.appRed));
-
+        tabs = (TabLayout) findViewById(R.id.tabs);
 
 
     }
 
 
     @Override
-    public void onResponse( Response<Slots> response, Retrofit retrofit) {
+    public void onResponse(Response<Slots> response, Retrofit retrofit) {
 
         Log.v("response", "+++++" + response);
 
         vp_dates.setAdapter(new DateAdapter(getSupportFragmentManager(), response.body().getDates()));
-
+        tabs.setTabGravity(TabLayout.GRAVITY_FILL);
+        tabs.setupWithViewPager(vp_dates);
 
 
     }
@@ -77,10 +65,6 @@ public class MainActivity extends AppCompatActivity implements Callback<Slots> {
     public void onFailure(Throwable t) {
         Toast.makeText(MainActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
     }
-
-
-
-
 
 
 

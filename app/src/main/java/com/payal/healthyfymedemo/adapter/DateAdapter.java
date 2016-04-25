@@ -5,15 +5,10 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.payal.healthyfymedemo.DemoFragment;
-import com.payal.healthyfymedemo.MainActivity;
-import com.payal.healthyfymedemo.R;
+import com.payal.healthyfymedemo.AvailabilityFragment;
 import com.payal.healthyfymedemo.pojo.Sessions;
 import com.payal.healthyfymedemo.utility.Utils;
 
@@ -49,7 +44,7 @@ public class DateAdapter extends FragmentPagerAdapter {
     @Override
     public void destroyItem(ViewGroup container, int position,
                             Object object) {
-        container.removeView((View)object);
+        //container.removeView((AvailabilityFragment)object);
     }
 
     @Override
@@ -78,7 +73,7 @@ public class DateAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        Fragment fragment = new DemoFragment();
+        Fragment fragment = new AvailabilityFragment();
 
         // Attach some data to the fragment
         // that we'll use to populate our fragment layouts
@@ -87,11 +82,12 @@ public class DateAdapter extends FragmentPagerAdapter {
 
         // Set the arguments on the fragment
         // that will be fetched in the
-        // DemoFragment@onCreateView
+        // AvailabilityFragment@onCreateView
         fragment.setArguments(args);
 
         return fragment;
     }
+
 
 
 }

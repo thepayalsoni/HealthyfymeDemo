@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.payal.healthyfymedemo.MainActivity">
+    tools:context="com.payal.healthyfymedemo.MainActivity"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
         android:layout_width="match_parent"
@@ -29,19 +30,23 @@
         android:textSize="18dip"
         />
 
+
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_month"
+        app:tabMode="scrollable"
+        app:tabGravity="fill"
+        app:tabMaxWidth="0dp"
+        />
+
     <android.support.v4.view.ViewPager
         android:id="@+id/vp_dates"
-        android:layout_width="wrap_content"
-        android:layout_height="@dimen/header_height"
-        android:layout_below="@id/tv_month">
-
-        <android.support.v4.view.PagerTabStrip
-            android:id="@+id/pager_tab_strip"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textColor="@android:color/black"
-             />
-    </android.support.v4.view.ViewPager>
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        ></android.support.v4.view.ViewPager>
 
 </RelativeLayout>
