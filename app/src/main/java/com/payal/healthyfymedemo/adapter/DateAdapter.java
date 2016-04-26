@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.payal.healthyfymedemo.AvailabilityFragment;
+import com.payal.healthyfymedemo.fragment.AvailabilityFragment;
 import com.payal.healthyfymedemo.pojo.Sessions;
 import com.payal.healthyfymedemo.utility.Utils;
 

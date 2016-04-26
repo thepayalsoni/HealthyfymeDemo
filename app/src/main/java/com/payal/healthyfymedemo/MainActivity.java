@@ -2,6 +2,7 @@ package com.payal.healthyfymedemo;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -24,6 +25,8 @@ public class MainActivity extends AppCompatActivity implements Callback<Slots> {
     private static final String FRAGMENT_TAG_DATA_PROVIDER = "data provider";
     TabLayout tabs;
 
+    private static final String FRAGMENT_LIST_VIEW = "payview";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +48,9 @@ public class MainActivity extends AppCompatActivity implements Callback<Slots> {
 
         tabs = (TabLayout) findViewById(R.id.tabs);
 
+        if (savedInstanceState == null) {
+
+        }
 
     }
 
@@ -59,6 +65,13 @@ public class MainActivity extends AppCompatActivity implements Callback<Slots> {
         tabs.setupWithViewPager(vp_dates);
 
 
+        getSupportFragmentManager().beginTransaction()
+                .add(new ExampleExpandableDataProviderFragment(), FRAGMENT_TAG_DATA_PROVIDER)
+                .commit();
+        /*getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, new ExpandableExampleFragment(), FRAGMENT_LIST_VIEW)
+                .commit();*/
+
     }
 
     @Override
@@ -66,6 +79,9 @@ public class MainActivity extends AppCompatActivity implements Callback<Slots> {
         Toast.makeText(MainActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
     }
 
-
+    public AbstractExpandableDataProvider getDataProvider() {
+        final Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG_DATA_PROVIDER);
+        return ((ExampleExpandableDataProviderFragment) fragment).getDataProvider();
+    }
 
 }
