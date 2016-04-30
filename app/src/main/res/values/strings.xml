@@ -2,4 +2,5 @@
     <string name="app_name">HealthyfymeDemo</string>
 
     <string name="header_text">Choose A Date &amp; Time</string>
+    <string name="slots_avalable">%1$s Slots Available</string>
 </resources>

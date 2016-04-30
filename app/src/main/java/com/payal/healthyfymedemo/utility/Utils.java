@@ -1,7 +1,5 @@
 package com.payal.healthyfymedemo.utility;
 
-import android.widget.Switch;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -13,6 +11,7 @@ import java.util.Date;
  */
 public class Utils {
 
+    public static  String SESSION_DATA="session_data";
     public static String getMonth(String date) {
         Calendar cal = Calendar.getInstance();
 
@@ -34,7 +33,7 @@ public class Utils {
     public static int getDate(String date) {
         Calendar cal = Calendar.getInstance();
 
-        DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         Date urdate;
         try {
             urdate = df.parse(date);
@@ -51,13 +50,12 @@ public class Utils {
     public static String getDay(String date) {
         Calendar cal = Calendar.getInstance();
 
-        DateFormat df = new SimpleDateFormat("yyyy-mm-dd");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         Date urdate;
         try {
             urdate = df.parse(date);
             Calendar c = Calendar.getInstance();
             c.setTime(urdate);
-
             return formatDay(c.get(Calendar.DAY_OF_WEEK));
         } catch (ParseException e) {
             e.printStackTrace();
@@ -119,8 +117,37 @@ public class Utils {
             default:
                 return null;
 
-
         }
     }
 
+
+    public static String getTime(String time)
+    {
+
+
+        Date urdate;
+        Calendar cal = Calendar.getInstance();
+        try
+        {
+
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss+SS:SS");
+            Date date = format.parse(time);
+            format = new SimpleDateFormat("MM-dd-yyyy hh:mm a");
+            time = format.format(date);
+
+            cal.setTime(date);
+            return (format(cal.get(Calendar.HOUR))+" : "+format(cal.get(Calendar.MINUTE)) +(cal.get(Calendar.AM_PM)==(Calendar.AM)?" AM":" PM"));
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    private static String format(int number)
+    {
+     return String.format("%02d", number);
+    }
 }

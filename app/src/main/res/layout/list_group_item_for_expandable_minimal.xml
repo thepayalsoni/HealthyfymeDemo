@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toLeftOf="@+id/expand_icon"
+        android:background="@color/background_group"
+        android:clickable="true"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/group_margin_left"
+        android:paddingTop="@dimen/group_margin_left"
+        android:weightSum="10">
+
+
+        <FrameLayout
+            android:layout_width="40dip"
+            android:layout_height="40dip"
+            android:layout_marginLeft="10dip">
+
+            <com.payal.healthyfymedemo.views.CircularImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:src="@drawable/ic_morningsnack"
+                app:civ_fill_color="@color/appRed" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tv_sessionType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="4"
+            android:gravity="center"
+            android:text="Morning"
+            android:textColor="@android:color/black"
+            android:textSize="20dip" />
+
+        <TextView
+            android:id="@+id/tv_slotsAvailable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:textColor="@color/appRed"
+            android:textSize="18dip" />
+
+
+    </LinearLayout>
+
+    <com.payal.healthyfymedemo.views.ExpandableItemIndicator
+        android:id="@+id/expand_icon"
+        android:layout_width="20dip"
+        android:layout_height="20dip"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:layout_marginRight="10dip"
+        android:src="@drawable/ic_red_reveallist" />
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:background="@color/divider" />
+
+
+</RelativeLayout>

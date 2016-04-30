@@ -1,51 +1,40 @@
 package com.payal.healthyfymedemo.adapter;
 
 import android.content.Context;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.view.View;
-import android.view.ViewGroup;
 
+import com.payal.healthyfymedemo.MainActivity;
 import com.payal.healthyfymedemo.fragment.AvailabilityFragment;
 import com.payal.healthyfymedemo.pojo.Sessions;
 import com.payal.healthyfymedemo.utility.Utils;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 /**
  * Created by payal on 24/4/16.
  */
-public class DateAdapter extends FragmentPagerAdapter {
+public class DateAdapter extends FragmentPagerAdapter implements MainActivity.FetchMonth {
 
     LinkedHashMap<String, Sessions> datesHashMap;
     Context mContext;
     String date;
+    private final List<Fragment> mFragmentList = new ArrayList<>();
 
-
-
-    public DateAdapter(FragmentManager fm,LinkedHashMap<String, Sessions> datesHashMap) {
+    public DateAdapter(FragmentManager fm, LinkedHashMap<String, Sessions> datesHashMap) {
         super(fm);
-        this.datesHashMap = datesHashMap ;
+        this.datesHashMap = datesHashMap;
+        MainActivity.fetchMonth= DateAdapter.this;
     }
 
-    /*public DateAdapter(Context context, )
-    {
 
-        this.mContext = context;
-    }*/
-
-
-    public String getByIndex(LinkedHashMap<String, Sessions> hMap, int index){
+    public String getByIndex(LinkedHashMap<String, Sessions> hMap, int index) {
         return (String) hMap.keySet().toArray()[index];
     }
 
-    @Override
-    public void destroyItem(ViewGroup container, int position,
-                            Object object) {
-        //container.removeView((AvailabilityFragment)object);
-    }
 
     @Override
     public int getCount() {
@@ -54,40 +43,38 @@ public class DateAdapter extends FragmentPagerAdapter {
 
     @Override
     public float getPageWidth(int position) {
-        return(1.0f);
-    }
-
-    @Override
-    public boolean isViewFromObject(View view, Object object) {
-        return(view == object);
+        return (1.0f);
     }
 
 
     @Override
     public CharSequence getPageTitle(int position) {
-        date =getByIndex(datesHashMap, position);
+        date = getByIndex(datesHashMap, position);
 
-        return Utils.getDate(date)+"\n"+Utils.getDay(date);
+        return Utils.getDate(date) + "\n" + Utils.getDay(date);
     }
 
 
     @Override
     public Fragment getItem(int position) {
-        Fragment fragment = new AvailabilityFragment();
 
-        // Attach some data to the fragment
-        // that we'll use to populate our fragment layouts
-        Bundle args = new Bundle();
-        args.putInt("page_position", position + 1);
+        Sessions session = getSelectedSession(datesHashMap,position);
 
-        // Set the arguments on the fragment
-        // that will be fetched in the
-        // AvailabilityFragment@onCreateView
-        fragment.setArguments(args);
 
-        return fragment;
+        return AvailabilityFragment.newInstance(session);
+    }
+
+    private Sessions getSelectedSession(LinkedHashMap<String, Sessions> hMap,int position)
+    {
+
+       return  (Sessions)hMap.values().toArray()[position];
     }
 
 
+    @Override
+    public String getMonthData(int position)
+    {
+        return getByIndex(datesHashMap, position);
+    }
 
 }

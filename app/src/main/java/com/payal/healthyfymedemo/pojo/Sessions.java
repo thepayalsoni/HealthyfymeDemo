@@ -2,43 +2,45 @@ package com.payal.healthyfymedemo.pojo;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
  * Created by payal on 23/4/16.
  */
-public class Sessions {
+public class Sessions implements Serializable {
+
+
 
     @SerializedName("morning")
-    private ArrayList<Morning> morningSessionArray;
+    private ArrayList<SessionDetails> morningSessionArray;
     @SerializedName("afternoon")
-    private ArrayList<Afternoon> afternoonSessionArray;
+    private ArrayList<SessionDetails> afternoonSessionArray;
     @SerializedName("evening")
-    private ArrayList<Evening> eveningSessionArray;
+    private ArrayList<SessionDetails> eveningSessionArray;
 
-    public ArrayList<Morning> getMorningSessionArray() {
+    public ArrayList<SessionDetails> getMorningSessionArray() {
         return morningSessionArray;
     }
 
-    public void setMorningSessionArray(ArrayList<Morning> morningSessionArray) {
+    public void setMorningSessionArray(ArrayList<SessionDetails> morningSessionArray) {
         this.morningSessionArray = morningSessionArray;
     }
 
-    public ArrayList<Afternoon> getAfternoonSessionArray() {
+    public ArrayList<SessionDetails> getAfternoonSessionArray() {
         return afternoonSessionArray;
     }
 
-    public void setAfternoonSessionArray(ArrayList<Afternoon> afternoonSessionArray) {
+    public void setAfternoonSessionArray(ArrayList<SessionDetails> afternoonSessionArray) {
         this.afternoonSessionArray = afternoonSessionArray;
     }
 
-    public ArrayList<Evening> getEveningSessionArray() {
+    public ArrayList<SessionDetails> getEveningSessionArray() {
         return eveningSessionArray;
     }
 
-    public void setEveningSessionArray(ArrayList<Evening> eveningSessionArray) {
+    public void setEveningSessionArray(ArrayList<SessionDetails> eveningSessionArray) {
         this.eveningSessionArray = eveningSessionArray;
     }
-
 
 }

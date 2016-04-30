@@ -1,4 +1,4 @@
-package com.payal.healthyfymedemo;
+package com.payal.healthyfymedemo.views;
 
 import android.content.Context;
 import android.os.Build;
@@ -7,9 +7,6 @@ import android.util.AttributeSet;
 import android.util.SparseArray;
 import android.widget.FrameLayout;
 
-/**
- * Created by payal on 4/25/2016.
- */
 public class ExpandableItemIndicator extends FrameLayout {
     static abstract class Impl {
         public abstract void onInit(Context context, AttributeSet attrs, int defStyleAttr, ExpandableItemIndicator thiz);

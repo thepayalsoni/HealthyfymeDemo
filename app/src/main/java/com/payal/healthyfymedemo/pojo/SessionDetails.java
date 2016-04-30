@@ -2,17 +2,19 @@ package com.payal.healthyfymedemo.pojo;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by payal on 23/4/16.
  */
-public class Afternoon {
+public class SessionDetails implements Serializable {
 
     @SerializedName("end_time")
     private String endTime;
     @SerializedName("is_booked")
-    private String isBooked;
+    private boolean isBooked;
     @SerializedName("is_expired")
-    private String isExpired;
+    private boolean isExpired;
     @SerializedName("slot_id")
     private long slotId;
     @SerializedName("start_time")
@@ -26,19 +28,19 @@ public class Afternoon {
         this.endTime = endTime;
     }
 
-    public String getIsBooked() {
+    public boolean getIsBooked() {
         return isBooked;
     }
 
-    public void setIsBooked(String isBooked) {
+    public void setIsBooked(boolean isBooked) {
         this.isBooked = isBooked;
     }
 
-    public String getIsExpired() {
+    public boolean getIsExpired() {
         return isExpired;
     }
 
-    public void setIsExpired(String isExpired) {
+    public void setIsExpired(boolean isExpired) {
         this.isExpired = isExpired;
     }
 
@@ -57,5 +59,4 @@ public class Afternoon {
     public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
-
 }

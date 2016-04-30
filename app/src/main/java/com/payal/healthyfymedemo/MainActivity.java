@@ -1,17 +1,17 @@
 package com.payal.healthyfymedemo;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.payal.healthyfymedemo.adapter.DateAdapter;
 import com.payal.healthyfymedemo.interfaces.SlotsApi;
 import com.payal.healthyfymedemo.pojo.Slots;
+import com.payal.healthyfymedemo.utility.Utils;
 
 import retrofit.Call;
 import retrofit.Callback;
@@ -20,17 +20,19 @@ import retrofit.Response;
 import retrofit.Retrofit;
 
 public class MainActivity extends AppCompatActivity implements Callback<Slots> {
-    ViewPager vp_dates;
-    TextView tv_month;
-    private static final String FRAGMENT_TAG_DATA_PROVIDER = "data provider";
-    TabLayout tabs;
-
-    private static final String FRAGMENT_LIST_VIEW = "payview";
+    private ViewPager vp_dates;
+    private TextView tv_month;
+    private TabLayout tabs;
+    public static FetchMonth fetchMonth = null;
+    private ProgressDialog progressDialog = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
+
+
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://108.healthifyme.com")
@@ -40,6 +42,11 @@ public class MainActivity extends AppCompatActivity implements Callback<Slots> {
 
         SlotsApi stackOverflowAPI = retrofit.create(SlotsApi.class);
 
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Fetching data...");
+
+        progressDialog.show();
+
         Call<Slots> call = stackOverflowAPI.loadSlots();
         call.enqueue(this);
 
@@ -48,9 +55,6 @@ public class MainActivity extends AppCompatActivity implements Callback<Slots> {
 
         tabs = (TabLayout) findViewById(R.id.tabs);
 
-        if (savedInstanceState == null) {
-
-        }
 
     }
 
@@ -58,30 +62,52 @@ public class MainActivity extends AppCompatActivity implements Callback<Slots> {
     @Override
     public void onResponse(Response<Slots> response, Retrofit retrofit) {
 
-        Log.v("response", "+++++" + response);
+        DateAdapter adapter = new DateAdapter(getSupportFragmentManager(), response.body().getDates());
 
-        vp_dates.setAdapter(new DateAdapter(getSupportFragmentManager(), response.body().getDates()));
+
+        vp_dates.setAdapter(adapter);
         tabs.setTabGravity(TabLayout.GRAVITY_FILL);
         tabs.setupWithViewPager(vp_dates);
 
+        tabs.setSelectedTabIndicatorColor(getResources().getColor(R.color.appRed));
 
-        getSupportFragmentManager().beginTransaction()
-                .add(new ExampleExpandableDataProviderFragment(), FRAGMENT_TAG_DATA_PROVIDER)
-                .commit();
-        /*getSupportFragmentManager().beginTransaction()
-                .add(R.id.container, new ExpandableExampleFragment(), FRAGMENT_LIST_VIEW)
-                .commit();*/
+        if(progressDialog.isShowing())
+            progressDialog.dismiss();
+
+        vp_dates.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                if (fetchMonth != null)
+                    tv_month.setText(Utils.getMonth(fetchMonth.getMonthData(position)));
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+               /* if(fetchMonth!=null)
+                    tv_month.setText(Utils.getMonth(fetchMonth.getMonthData(position)));
+*/
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
 
     }
 
     @Override
     public void onFailure(Throwable t) {
-        Toast.makeText(MainActivity.this, t.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+        if(progressDialog.isShowing())
+            progressDialog.dismiss();
+        Toast.makeText(MainActivity.this, "Failed to get data from server.", Toast.LENGTH_SHORT).show();
     }
 
-    public AbstractExpandableDataProvider getDataProvider() {
-        final Fragment fragment = getSupportFragmentManager().findFragmentByTag(FRAGMENT_TAG_DATA_PROVIDER);
-        return ((ExampleExpandableDataProviderFragment) fragment).getDataProvider();
+
+    public interface FetchMonth {
+
+        public String getMonthData(int position);
     }
 
 }

@@ -1,4 +1,4 @@
-package com.payal.healthyfymedemo;
+package com.payal.healthyfymedemo.views;
 
 import android.content.Context;
 import android.graphics.drawable.Animatable;
@@ -8,15 +8,14 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 
-/**
- * Created by payal on 4/25/2016.
- */
+import com.payal.healthyfymedemo.R;
+
 class ExpandableItemIndicatorImplAnim extends ExpandableItemIndicator.Impl {
     private AppCompatImageView mImageView;
 
     @Override
     public void onInit(Context context, AttributeSet attrs, int defStyleAttr, ExpandableItemIndicator thiz) {
-        View v = LayoutInflater.from(context).inflate(R.layout.widget_expandable_item_indicator, thiz, true);
+        View v = LayoutInflater.from(context).inflate(R.layout.expandible_item_indicator, thiz, true);
         mImageView = (AppCompatImageView) v.findViewById(R.id.image_view);
     }
 
